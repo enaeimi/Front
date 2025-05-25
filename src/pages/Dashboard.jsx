@@ -4,6 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "r
 import { Typography, Paper, Box, Grid, Button, CircularProgress, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Assignment, People, TaskAlt, Timeline, Refresh } from "@mui/icons-material";
 import RecentProjects from '../components/dashboard/RecentProjects'; // Importez le composant
+import AddProjectForm from '../components/projects/AddProjectForm';
 
 const StatCard = ({ title, value, icon }) => (
   <Paper elevation={3} sx={{ p: 2 }}>
@@ -89,6 +90,10 @@ const Dashboard = () => {
           {isLoading ? 'Rafraîchissement...' : 'Rafraîchir'}
         </Button>
       </Box>
+
+
+      <AddProjectForm />
+
 
       <Typography variant="h4">Tableau de bord</Typography>
       <Typography variant="body1"> Bienvenue dans votre tableau de bord </Typography>
