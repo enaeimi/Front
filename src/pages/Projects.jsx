@@ -3,28 +3,26 @@ import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import {
   Typography, Paper, List, ListItem, ListItemText, ListItemSecondaryAction, Chip, Box, InputLabel,
-  Select, MenuItem, FormControl
+  Select, MenuItem, FormControl, TextField, Button, Stack
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 const Projects = () => {
   const allProjects = useSelector(state => state.projects.items);
   const projectCount = useSelector(state => state.projects.items.length);
 
-  // const [searchTerm, setSearchTerm] = useState('');
-  // const searchResults = useSelector(state =>
-  //   state.projects.items.filter(project =>
-  //     project.name.toLowerCase().includes(searchTerm.toLowerCase())
-  //   )
-  // );
-  // const handleSearch(event) => {
-  //   const search = event.target.value;
-  // }
+  const [searchTerm, setSearchTerm] = useState('');
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const [statusFilter, setStatusFilter] = useState('all');
   const filteredProjects = allProjects.filter(project =>
-    statusFilter === 'all' ? true : project.status === statusFilter
+    (statusFilter === 'all' ? true : project.status === statusFilter) &&
+    project.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   const handleStatusChange = (event) => {
     setStatusFilter(event.target.value);
   };
@@ -34,17 +32,33 @@ const Projects = () => {
       <Typography variant="h4" gutterBottom>
         Liste des Projets {projectCount}
       </Typography>
-      <InputLabel>Période</InputLabel>
-      <Select
-        value={statusFilter}
-        label="Filtrer par statut"
-        onChange={handleStatusChange}
-      >
-        <MenuItem value="all">Tout les projets</MenuItem>
-        <MenuItem value="En Cours">En cours</MenuItem>
-        <MenuItem value="En Attente">En attent</MenuItem>
-        <MenuItem value="Terminé">Terminé</MenuItem>
-      </Select>
+      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+        <TextField
+          label="Rechercher un projet"
+          variant="outlined"
+          value={searchTerm}
+          onChange={handleSearch}
+          size="small"
+          sx={{ width: 300 }}
+          InputProps={{
+            startAdornment: <SearchIcon sx={{ color: 'action.active', mr: 1 }} />,
+          }}
+        />
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>Filtrer par statut</InputLabel>
+          <Select
+            value={statusFilter}
+            label="Filtrer par statut"
+            onChange={handleStatusChange}
+            size="small"
+          >
+            <MenuItem value="all">Tous les projets</MenuItem>
+            <MenuItem value="En Cours">En cours</MenuItem>
+            <MenuItem value="En Attente">En attente</MenuItem>
+            <MenuItem value="Terminé">Terminé</MenuItem>
+          </Select>
+        </FormControl>
+      </Stack>
 
       <Paper>
         <List>

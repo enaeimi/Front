@@ -1,12 +1,12 @@
 // Structure de base à compléter
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux'; // Ajoutez cet import
+import { useDispatch } from 'react-redux';
 import { TextField, Button, Paper, Stack, FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
 import { addProject } from '../../store/projectSlice';
 
 
 const AddProjectForm = () => {
-    const dispatch = useDispatch(); // Ajoutez cette ligne
+    const dispatch = useDispatch();
 
     // Ajoutez votre state ici
 
